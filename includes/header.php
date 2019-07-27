@@ -1,4 +1,5 @@
 <?php
+ob_start();
 require("core.php");
 
 
@@ -48,17 +49,29 @@ echo '
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="modal-title">Yeni Bölmə</h5>
+            <h5 class="modal-title" id="modal-title">Yeni Xəbər</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <form action="'.$home.'/ajax/category.php?action=add" method="post">
+            <form action="'.$home.'/ajax/news.php?action=add" method="post" enctype="multipart/form-data">
               <div class="form-group">
-                <label for="name" class="col-form-label">Bölmə Adı:</label>
-                <input type="text" class="form-control" id="name" name="name">
+                <label for="title" class="col-form-label">Başlıq:</label>
+                <input type="text" class="form-control" id="title" name="title">
               </div>
+              
+              <div class="form-group">
+                <label for="text" class="col-form-label">Mətn:</label>
+                <input type="text" class="form-control" id="text" name="text">
+              </div>
+              
+               <div class="form-group">
+                <label for="photo" class="col-form-label">Şəkil:</label>
+                <input type="file" class="form-control" id="photo" name="photo">
+               </div>
+               
+              <input type="hidden" id="user-id" name="id" value="">
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Ləğv et</button>
                 <button type="button" class="btn btn-primary" id="modal-pressed">Əlavə et</button>
@@ -68,22 +81,43 @@ echo '
         </div>
       </div>
     </div>
+    
+    
 
     <div class="modal fade" id="user-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="modal-title">Yeni Bölmə</h5>
+            <h5 class="modal-title" id="modal-title">Yeni İstifadəçi</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <form action="'.$home.'/ajax/category.php?action=add" method="post">
+            <form action="'.$home.'/ajax/user.php?action=add" method="post">
               <div class="form-group">
-                <label for="name" class="col-form-label">Bölmə Adı:</label>
-                <input type="text" class="form-control" id="name" name="name">
+                <label for="full_name" class="col-form-label">Ad / Soyad:</label>
+                <input type="text" class="form-control" id="full_name" name="full_name">
               </div>
+              
+              <div class="form-group">
+                <label for="username" class="col-form-label">İstifadəçi Adı:</label>
+                <input type="text" class="form-control" id="username" name="username">
+              </div>
+              
+               <div class="form-group">
+                <label for="password" class="col-form-label">Şifrə:</label>
+                <input type="text" class="form-control" id="password" name="password">
+               </div>
+               
+               <div class="form-group">
+                <label for="rights" class="col-form-label">Vəzifə:</label>
+                <select name="rights" id="rights" class="form-control">
+                    <option value="0">İstifadəçi</option>
+                    <option value="1">Admin</option>
+                </select>
+               </div>
+              <input type="hidden" id="user-id" name="id" value="">
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Ləğv et</button>
                 <button type="button" class="btn btn-primary" id="modal-pressed">Əlavə et</button>
@@ -114,7 +148,11 @@ echo '
         $user = User::me();
         if($user){
           if(User::me()){
-            echo "<a href='$home/panel' ".($page=='panel'?'class="active"':null)."><div class='navigation-menu'>Panel</div></a>";
+            echo "
+            <div class='navigation-menu user'>$user[full_name]</div>
+            <a href='$home/panel' ".($page=='panel'?'class="active"':null)."><div class='navigation-menu'>Panel</div></a>
+            
+            ";
           }
           echo '
             <a href="'.$home.'/logout">
@@ -175,6 +213,11 @@ echo '
               foreach ($categories as $category) {
                 echo "<a href='$home/$category[url_name]' ".($page==$category['url_name']?'class="active"':null)."><li>$category[name]</li></a>";
               }
+                if(User::me()){
+                    echo "<a href='$home/logout'><li>Çıxış</li></a>";
+                }else{
+                    echo "<a href='$home/auth' ".($page=='auth' || $rootPage=='auth'?'class="active"':null)."><li>Giriş</li></a>";
+                }
               echo'
             </ul>
 
@@ -189,6 +232,11 @@ echo '
             $categories = Category::getAll();
             foreach ($categories as $category) {
               echo "<a href='$home/$category[url_name]' ".($page==$category['url_name']?'class="active"':null)."><li>$category[name]</li></a>";
+            }
+            if(User::me()){
+                echo "<a href='$home/logout'><li>Çıxış</li></a>";
+            }else{
+                echo "<a href='$home/auth' ".($page=='auth' || $rootPage=='auth'?'class="active"':null)."><li>Giriş</li></a>";
             }
             echo'
           </ul>

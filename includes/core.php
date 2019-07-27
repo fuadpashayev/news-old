@@ -1,6 +1,8 @@
 <?php session_start();
 require ('db.php');
 $home = "http://localhost:8000/news";
+$root = "$_SERVER[DOCUMENT_ROOT]/news";
+
 
 $uri = $_SERVER['REQUEST_URI'];
 $url = explode('/',$uri);
@@ -26,7 +28,6 @@ class Token {
   }
 
   public static function set($token){
-    global $time;
     $_SESSION['token'] = $token;
   }
 
@@ -80,17 +81,24 @@ class News {
 
   public static function set($data){
       global $db;
-      $query = $db->prepare("insert into news (	title , photo, text) values (:title, :photo, :text) ");
+      $query = $db->prepare("insert into news (title , photo, `text`, user_id, `time`) values (:title, :photo, :text, :user_id, :time) ");
       $query->execute($data);
-
       return $query;
     }
+
   public static function update($data){
       global $db;
-      $query = $db->prepare("update news (title , photo, text) values (:title, :photo, :text) where id='$id'");
+      $query = $db->prepare("update news set title = :title , text = :text, user_id = :user_id, `time` = ':time' where id=:id");
       $query->execute($data);
       return $query;
-    }
+  }
+
+  public static function delete($data){
+      global $db;
+      $query = $db->prepare("delete from news where id=:id");
+      $query->execute($data);
+      return $query;
+  }
 
 
   public static function get($id=null){
@@ -132,6 +140,26 @@ class User {
     return $user;
   }
 
+    public static function set($data){
+        global $db;
+        $query = $db->prepare("insert into users (	username, password, full_name, rights) values (:username, :password, :full_name, :rights) ");
+        $query->execute($data);
+        return $query;
+    }
+    public static function update($data){
+        global $db;
+        $query = $db->prepare("update users set username=:username, password=:password, full_name=:full_name, rights=:rights where id=:id");
+        $query->execute($data);
+        return $query;
+    }
+
+    public static function delete($data){
+        global $db;
+        $query = $db->prepare("delete from users where id=:id");
+        $query->execute($data);
+        return $query;
+    }
+
   public static function getAll(){
     global $db;
     $users = $db->query("select * from users");
@@ -161,7 +189,7 @@ class User {
 
   public static function findRights($rights){
     $rights_names = [
-      0 => 'User',
+      0 => 'İstifadəçi',
       1 => 'Admin'
     ];
     return $rights_names[$rights];
@@ -263,6 +291,9 @@ function GET($index){
 }
 function POST($index){
   return isset($_POST[$index])?$_POST[$index]:null;
+}
+function FILES($index){
+    return isset($_FILES[$index])?$_FILES[$index]:null;
 }
 
 function title($title){

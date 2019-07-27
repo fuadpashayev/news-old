@@ -32,7 +32,7 @@ switch ($action) {
           <td>$category[name]</td>
           <td>
             <button class='option-button btn btn-primary category-button' type='edit' data-name='$category[name]' data-id='$category[id]' data-toggle='modal' data-target='#category-modal'>Dəyiş</button>
-            <button class='option-button btn btn-danger delete' id='$category[id]'>Sil</button>
+            <button class='option-button btn btn-danger delete' id='$category[id]' type='category'>Sil</button>
           </td>
         </tr>
       ";
@@ -48,7 +48,7 @@ switch ($action) {
 
   case 'news':
     echo '
-      <a class="backButton" href="#"><div class="btn btn-primary back add" type="news"><i class="material-icons">add</i>Əlavə et</div></a>
+      <a class="backButton" href="#"><div class="btn btn-primary back add news-button" type="add" data-toggle="modal" data-target="#news-modal"><i class="material-icons">add</i>Əlavə et</div></a>
       <h5 class="panel-header bg-info text-white">Xəbərlər</h5>
       <table class="panel-content">
         <thead>
@@ -72,8 +72,8 @@ switch ($action) {
           <td>$new[url_name]</td>
           <td>$new[name]</td>
           <td>
-            <button class='option-button btn btn-primary edit'>Dəyiş</button>
-            <button class='option-button btn btn-danger delete'>Sil</button>
+            <button class='option-button btn btn-primary edit' type='edit' data-toggle='modal' data-target=''#news-modal'>Dəyiş</button>
+            <button class='option-button btn btn-danger delete' id='$new[id]' type='news'>Sil</button>
           </td>
         </tr>
       ";
@@ -90,7 +90,7 @@ switch ($action) {
 
   case 'user':
     echo '
-      <a class="backButton" href="#"><div class="btn btn-primary back add" type="user"><i class="material-icons">add</i>Əlavə et</div></a>
+      <a class="backButton" href="#"><div class="btn btn-primary back user-button" type="add" data-toggle="modal" data-target="#user-modal"><i class="material-icons">add</i>Əlavə et</div></a>
       <h5 class="panel-header bg-info text-white">İstifadəçilər</h5>
       <table class="panel-content">
         <thead>
@@ -113,8 +113,8 @@ switch ($action) {
           <td>$user[full_name]</td>
           <td>$right</td>
           <td>
-            <button class='option-button btn btn-primary edit'>Dəyiş</button>
-            <button class='option-button btn btn-danger delete'>Sil</button>
+            <button class='option-button btn btn-primary edit user-button' type='edit' data-id='$user[id]' data-toggle='modal' data-target='#user-modal'>Dəyiş</button>
+            <button class='option-button btn btn-danger delete' id='$user[id]' type='user'>Sil</button>
           </td>
         </tr>
       ";

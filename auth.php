@@ -15,12 +15,12 @@ switch ($action) {
     $login = User::loginWithCredentials($data);
     if(!$login)
       Errors::set('auth','Username or password is incorrect');
-    header("location:$home/home");
+    header("location:$home/home");exit;
   break;
 
   case 'logout':
     User::logout();
-    header("location:$home/home");
+    header("location:$home/home");exit;
   break;
 
   default:

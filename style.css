@@ -167,6 +167,12 @@ ul>a:not(.backButton):hover{
     transition: 220ms;
 }
 
+.navigation-menu.user {
+    background: #d4d4d4 !important;
+    color: #007bff;
+    text-transform: capitalize;
+}
+
 .navigation-menu:hover {
     background: #cccccca3;
 }
@@ -177,14 +183,16 @@ ul>a:not(.backButton):hover{
     padding: 10px;
 }
 
+
 .panel-navigation-menu {
-    width: calc(5vw + 5vh + 50px + 5%);
-    height: calc(3.5vw + 3.5vh + 35px + 3.5%);
+    width: calc(4vw + 4vh + 150px + 4%);
+    height: calc(4vw + 4vh + 50px + 4%);
     display: inline-flex;
     color: #fff;
     border-radius: 2px;
-    margin-right: 5px;
+    margin: 2px auto;
 }
+
 
 .panel-navigation-menu:hover i{
   transform: rotateY(180deg) scale(1.5);
@@ -390,9 +398,19 @@ ul.menu a:last-child {
   background-color: #f4f4f4;
 }
 
+@media (max-width: 451px) {
+    .panel-navigation {
+        text-align: center;
+    }
+
+    .panel-navigation-menu {
+        width: calc(10vw + 10vh + 150px + 10%);
+        height: calc(6vw + 6vh + 50px + 6%);
+    }
+}
 
 @media (max-width:768px){
-  nav ul a:not(:first-child):not(:nth-child(2)),.container-body .backButton{
+  nav ul a:not(:first-child),.container-body .backButton{
     display: none;
   }
 }
@@ -413,3 +431,5 @@ ul.menu a:last-child {
     display: none;
   }
 }
+
+
