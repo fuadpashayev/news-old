@@ -1,6 +1,6 @@
 <?php
 require('includes/header.php');
-Panel::onlyAdmins();
+User::onlyUsers();
 $action = GET('action');
 if($page!='panel' && $rootPage!='news'){
   echo '<a class="backButton" href="'.$home.'/panel"><div class="btn btn-primary m-1 back"><i class="material-icons">chevron_left</i>Panel</div></a>';
@@ -124,6 +124,7 @@ switch ($action) {
 
 
   case 'user':
+    Panel::onlyAdmins();
     echo '
       <a class="backButton" href="#"><div class="btn btn-primary back user-button" type="add" data-toggle="modal" data-target="#user-modal"><i class="material-icons">add</i>Əlavə et</div></a>
       <h5 class="panel-header bg-info text-white">İstifadəçilər</h5>
@@ -205,8 +206,10 @@ switch ($action) {
             </div>
           </div>
         </div>
-      </a>
+      </a>';
 
+  if(User::admin()){
+    echo '
       <a href="'.$home.'/panel/user">
         <div class="panel-navigation-menu bg-danger">
           <div class="panel-navigation-menu-inner">
@@ -222,7 +225,9 @@ switch ($action) {
           </div>
         </div>
       </a>
-
+    ';
+  }
+  echo '
     </div>
   </div>
   ';
