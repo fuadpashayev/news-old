@@ -3,9 +3,9 @@
 `/installation.php` səhifəsinə daxil olursunuz,mysql database quraşdırır.
 Daha sonra isə `core.php` faylında olan
 
-`$home = "http://localhost:8000/news";`\
+`$home = "http://localhost:8000/news";` və
  `$root = "$_SERVER[DOCUMENT_ROOT]/news";`
 
-dəyişkənlərini uyğun olaraq dəyişirsiniz və hazırdır.\
-`login: admin`\
+dəyişkənlərini uyğun olaraq dəyişirsiniz və hazırdır.
+`login: admin`
 `şifrə: admin`
