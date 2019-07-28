@@ -84,7 +84,7 @@ foreach ($sql as $name => $query) {
 }
 
 
-header("refresh:3,url = index.php");
+header("refresh:1,url = index.php");
 
 
 ?>
