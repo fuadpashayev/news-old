@@ -1,6 +1,6 @@
 <?php
 include("includes/header.php");
-title("Ana Səhifə");
+
 $action = GET('action');
 switch ($action){
     case 'show_news':
@@ -34,6 +34,8 @@ switch ($action){
 
     case 'show_category':
         $id = GET('id');
+        $category = Category::get($id);
+        title("Bölmə - $category[name]");
         echo '
             <div class="all-news">';
         $news = News::getFromCategory($id);
@@ -62,6 +64,7 @@ switch ($action){
     break;
 
     default:
+        title("Ana Səhifə");
         echo '
             <div class="all-news">';
                 $news = News::getAll();

@@ -124,6 +124,7 @@ switch ($action) {
 
 
   case 'user':
+    title("İstifadəçilər");
     Panel::onlyAdmins();
     echo '
       <a class="backButton" href="#"><div class="btn btn-primary back user-button" type="add" data-toggle="modal" data-target="#user-modal"><i class="material-icons">add</i>Əlavə et</div></a>
@@ -166,7 +167,7 @@ switch ($action) {
 
 
   default:
-
+  title("İdarəçi Paneli");
   $categories = Category::getAll()->rowCount();
   $news = News::getAll()->rowCount();
   $users = User::getAll()->rowCount();
