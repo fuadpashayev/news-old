@@ -6,15 +6,17 @@ switch ($action) {
     case 'add':
         $user = User::me();
         $file = FILES('photo');
-        $name = Hash::make(Token::generate()).'.jpg';
-        $dir = "$root/images/uploads/$name";
-        $photo = "$home/images/uploads/$name";
+        $photo = Hash::make(Token::generate()).'.jpg';
+        $dir = "$root/images/uploads/$photo";
         move_uploaded_file($file['tmp_name'],$dir);
+
         $data = [
             'title' => POST('title'),
             'text' => POST('text'),
             'photo' => $photo,
             'user_id' => $user['id'],
+            'url_name' => linkify(POST('title')),
+            'category' => POST('category'),
             'time' => $time
         ];
         $news = News::set($data);
@@ -22,14 +24,26 @@ switch ($action) {
         break;
 
     case 'edit':
+        $user = User::me();
+        $file = FILES('photo');
+        $photo = News::get(POST('id'))['photo'];
+        if($file['name']){
+            unlink("$root/images/uploads/$photo") or die('Old photo is not deleted');
+            $photo = Hash::make(Token::generate()).'.jpg';
+            $dir = "$root/images/uploads/$photo";
+            move_uploaded_file($file['tmp_name'],$dir);
+        }
         $data = [
-            'full_name' => POST('full_name'),
-            'username' => POST('username'),
-            'password' => POST('password'),
-            'rights' => POST('rights'),
+            'title' => POST('title'),
+            'text' => POST('text'),
+            'photo' => $photo,
+            'user_id' => $user['id'],
+            'url_name' => linkify(POST('title')),
+            'category' => POST('category'),
+            'time' => $time,
             'id' => POST('id')
         ];
-        $user = News::update($data);
+        $news = News::update($data);
         header("location:$home/panel/news");
         break;
 
@@ -37,13 +51,13 @@ switch ($action) {
         $data = [
             'id' => POST('id')
         ];
-        $user = User::delete($data);
+        $user = News::delete($data);
         break;
 
     case 'get':
         $id = POST('id');
-        echo json_encode(User::get($id));
-        break;
+        echo json_encode(News::get($id));
+    break;
 }
 
 ?>

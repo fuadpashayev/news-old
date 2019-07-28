@@ -39,8 +39,8 @@ class Category {
 
   public static function get($id=null){
     global $db;
-    $query = $db->prepare("select * from categories where id=?");
-    $query->execute([$id]);
+    $query = $db->prepare("select * from categories where id=:param || url_name=:param");
+    $query->execute(['param' => $id]);
     $category = $query->fetch();
     return $category;
   }
@@ -79,41 +79,48 @@ class Category {
 class News {
 
 
-  public static function set($data){
+    public static function set($data){
       global $db;
-      $query = $db->prepare("insert into news (title , photo, `text`, user_id, `time`) values (:title, :photo, :text, :user_id, :time) ");
+      $query = $db->prepare("insert into news (title , photo, `text`, user_id, `time`, url_name, category) values (:title, :photo, :text, :user_id, :time, :url_name, :category) ");
       $query->execute($data);
       return $query;
     }
 
-  public static function update($data){
+    public static function update($data){
       global $db;
-      $query = $db->prepare("update news set title = :title , text = :text, user_id = :user_id, `time` = ':time' where id=:id");
+      $query = $db->prepare("update news set title = :title , text = :text, user_id = :user_id, photo = :photo, url_name = :url_name, `time` = :time, category = :category where id=:id");
       $query->execute($data);
       return $query;
-  }
+    }
 
-  public static function delete($data){
+    public static function delete($data){
       global $db;
       $query = $db->prepare("delete from news where id=:id");
       $query->execute($data);
       return $query;
-  }
+    }
 
 
-  public static function get($id=null){
+    public static function get($id=null){
     global $db;
-    $query = $db->prepare("select * from news where id=?");
-    $query->execute([$id]);
+    $query = $db->prepare("select * from news where id=:param || url_name=:param");
+    $query->execute(['param' => $id]);
     $news = $query->fetch();
     return $news;
-  }
+    }
 
-  public static function getAll(){
+    public static function getFromCategory($cateogry_id=null){
+        global $db;
+        $category = Category::get($cateogry_id);
+        $news = $db->query("select * from news where category='$category[id]'");
+        return $news;
+    }
+
+    public static function getAll(){
     global $db;
     $news = $db->query("select * from news");
     return $news;
-  }
+    }
 
 
 
@@ -300,5 +307,8 @@ function title($title){
   echo "<title>$title</title>";
 }
 
+function dd($smt){
+  var_dump($smt);exit;
+}
 
 ?>

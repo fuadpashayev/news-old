@@ -71,7 +71,19 @@ echo '
                 <input type="file" class="form-control" id="photo" name="photo">
                </div>
                
-              <input type="hidden" id="user-id" name="id" value="">
+               <div class="form-group">
+                <label for="category" class="col-form-label">Bölmə:</label>
+                <select class="form-control" name="category" id="category">
+                ';
+                    $categories = Category::getAll();
+                    foreach ($categories as $category) {
+                        echo "<option value='$category[id]'>$category[name]</option>";
+                    }
+                echo'
+                </select>
+               </div>
+               
+              <input type="hidden" id="news-id" name="id" value="">
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Ləğv et</button>
                 <button type="button" class="btn btn-primary" id="modal-pressed">Əlavə et</button>
@@ -200,11 +212,6 @@ echo '
                   <img src="'.$home.'/images/logo.png" alt="">
                 </li>
               </a>';
-              if($rootPage=='panel' && $page!='panel'){
-                echo '<a class="backButton" href="'.$home.'/panel"><div class="btn btn-primary m-1 back"><i class="material-icons">chevron_left</i>Panel</div></a>
-                      <a class="backButton" href="#"><div class="btn btn-primary back add" type="'.$page.'"><i class="material-icons">add</i>Əlavə et</div></a>
-                ';
-              }
 
               if(User::me()){
                 echo "<a href='$home/panel' ".($page=='panel' || $rootPage=='panel'?'class="active"':null)."><li>Panel</li></a>";

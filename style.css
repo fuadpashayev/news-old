@@ -77,11 +77,12 @@ body{
     box-shadow: 0px 0px 5px 0px #989898;
 }
 
-.container-body{
-  height: auto;
-  min-height: 390px;
-  background: #ffffffd1;
-  position: relative;
+.container-body {
+    height: auto;
+    min-height: 390px;
+    background: #ffffffd1;
+    position: relative;
+    overflow: auto;
 }
 
 .navigation .container-body{
@@ -260,6 +261,10 @@ ul>a:not(.backButton):hover{
     padding: 15px;
 }
 
+.panel-content td img{
+    height: 50px;
+}
+
 .panel-content th {
    padding: 10px 15px;
 }
@@ -268,13 +273,14 @@ ul>a:not(.backButton):hover{
     width: 75px;
     display: inline-flex;
     height: 30px;
-    line-height: 0px;
+    line-height: 0;
     align-items: center;
     justify-content: center;
     color: #fff;
     border-radius: 3px;
     transition: 220ms;
     cursor: pointer;
+    margin: 1px auto;
 }
 
 
@@ -398,6 +404,102 @@ ul.menu a:last-child {
   background-color: #f4f4f4;
 }
 
+
+.d-flex{
+    display: flex;
+}
+
+.news-image img {
+    margin: 4px;
+    width: 105%;
+}
+.author {
+    margin: 10px 35px;
+    padding: 10px 0;
+}
+
+.author span {
+    color: #588ec7;
+}
+
+.all-news {
+    padding: 5px;
+}
+
+.news-box {
+    width: calc(6vw + 6vh + 6% + 150px);
+    height: calc(5vw + 5vh + 5% + 100px);
+    margin: 10px;
+    float: left;
+    position: relative;
+    cursor: pointer;
+}
+
+.news-box img{
+    position: absolute;
+    top: 0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.news-box-inner {
+    background-color: #00000059;
+    width: 100%;
+    height: 80px;
+    position: absolute;
+    bottom: 0;
+    opacity: 0;
+    transition: 220ms;
+    color: #fff;
+    padding: 5px 10px;
+    overflow: auto;
+}
+
+.panel-content th:last-child {
+    width: 20%;
+}
+
+.news-box-inner::-webkit-scrollbar {
+    display: none;
+}
+
+.news-box:hover .news-box-inner{
+    opacity: 1;
+}
+
+
+
+.news-author{
+    position: absolute;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 30px;
+    background-color: #00000059;
+    color:#fff;
+}
+
+.news-author span:first-child {
+    float: left;
+}
+
+.news-author span:last-child {
+    float: right;
+    margin-right: 5px;
+}
+
+.news-author span i {
+    position: relative;
+    top: 3px;
+    vertical-align: -2px;
+    margin: 0 3px;
+    color: #96d0ff;
+}
+
+
+
 @media (max-width: 451px) {
     .panel-navigation {
         text-align: center;
@@ -410,9 +512,9 @@ ul.menu a:last-child {
 }
 
 @media (max-width:768px){
-  nav ul a:not(:first-child),.container-body .backButton{
-    display: none;
-  }
+    nav ul>a:not(:first-child){
+        display: none;
+    }
 }
 
 @media (min-width: 768px) {

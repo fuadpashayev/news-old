@@ -32,6 +32,7 @@ create table news(
   `photo` varchar(255) not null,
   `user_id` int(11) not null,
   `url_name` varchar(255) not null,
+  `category` int(11) not null,
   `time` bigint not null
 );
 ";

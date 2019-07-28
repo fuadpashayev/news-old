@@ -2,6 +2,7 @@ RewriteEngine on
 
 
 RewriteRule ^panel$ panel.php [NC]
+RewriteRule ^panel/news/(.*)$ panel.php?action=show_news&id=$1 [NC]
 RewriteRule ^panel/(.*)$ panel.php?action=$1 [NC]
 
 
@@ -9,5 +10,5 @@ RewriteRule ^(|home|index)$ index.php [NC]
 RewriteRule ^logout$ auth.php?action=logout [NC]
 RewriteRule ^auth$ auth.php [NC]
 RewriteRule ^auth/(.*)$ auth.php?action=$1 [NC]
-RewriteRule ^([a-z]+)\/?$ category.php?name=$1 [NC]
-RewriteRule ^([a-z_-]+)\/?$ news.php?name=$1 [NC]
+RewriteRule ^([a-z0-9]+)\/?$ index.php?action=show_category&id=$1 [NC]
+RewriteRule ^([a-z0-9_-]+)\/?$ index.php?action=show_news&id=$1 [NC]

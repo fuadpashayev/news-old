@@ -46,21 +46,20 @@ $(document).on("click",".news-button",function(){
     let type = $(this).attr("type")
     if(type=="edit"){
         let id = $(this).attr("data-id")
+        $('#news-id').val(id)
         $.post(`${HOME}/ajax/news.php?action=get`,{id:id},function(res){
-            let user = JSON.parse(res)
-            Object.keys(user).map(function(key){
-                $(`#${key}`).val(user[key])
+            let news = JSON.parse(res)
+            Object.keys(news).map(function(key){
+                if(key!='photo')
+                    $(`#${key}`).val(news[key])
             })
-            $('#user-id').val(user.id)
         })
         $('#news-modal form').attr("action",`${HOME}/ajax/news.php?action=edit`)
-        $('#photo').parents('.form-group').hide()
         $('#news-modal #modal-pressed').text('Dəyiş')
 
     }else{
         $('input,textarea,select').val('')
         $('#news-modal form').attr("action",`${HOME}/ajax/news.php?action=add`)
-        $('#photo').parents('.form-group').show()
         $('#news-modal #modal-pressed').text('Əlavə et')
     }
 })
